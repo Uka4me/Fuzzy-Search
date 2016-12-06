@@ -19,9 +19,9 @@ namespace Rextester
             
             var t = new Fuzzy();
             
-            for(int i = 1; i <= 5; i++)
+            for(int i = 1; i <= 10; i++)
             {
-                Console.WriteLine("Длина подстроки " + i + ": " + t.IndistinctMatching(i, r1, r2));
+                Console.WriteLine("Длина подстроки " + i + ": " + t.IndistinctMatching(i, r1, r2).ToString("#.##") + "%");
             }
         }
     }
@@ -56,7 +56,7 @@ namespace Rextester
 				for (PosStrB = 0; PosStrB <= strInputB.Length - lngLen; PosStrB++)
 				{
 					strTempB = strInputB.Substring(PosStrB, lngLen);
-					if ((string.Compare(strTempA, strTempB, isCase) == 0))
+					if (string.Compare(strTempA, strTempB, isCase) == 0)
 					{
 						TempRet.lngCountLike += 1;
 						break;
@@ -69,15 +69,9 @@ namespace Rextester
 
 		public float IndistinctMatching(int MaxMatching, string strInputMatching, string strInputStandart, bool isCase = true)
 		{
-			if (strInputMatching == null || strInputStandart == null)
-			{
-				return 0;
-			}
+			if (strInputMatching == null || strInputStandart == null || MaxMatching == 0) return 0;
 
-			if (strInputMatching == strInputStandart)
-			{
-				return 100;
-			}
+			if (strInputMatching == strInputStandart) return 100;
 				
 			strInputMatching = Regex.Replace(strInputMatching, @"[\W\s]", "");
 			strInputStandart = Regex.Replace(strInputStandart, @"[\W\s]", "");
@@ -86,9 +80,6 @@ namespace Rextester
 			RetCount tret;
 			int lngCurLen; //текущая длина подстроки
 			
-			//если не передан какой-либо параметр, то выход
-			//if (MaxMatching == 0 || strInputMatching.Length == 0 || strInputStandart.Length == 0) return 0;
-
 			gret.lngCountLike = 0;
 			gret.lngSubRows = 0;
 			// Цикл прохода по длине сравниваемой фразы
